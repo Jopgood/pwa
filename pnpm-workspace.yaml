@@ -1,0 +1,26 @@
+packages:
+  - packages/*
+  - examples/*
+
+catalogs:
+  dev:
+    "@types/node": ^22.10.2
+    prettier: ^3.4.2
+    tsdown: ^0.21.8
+    typescript: ^5.7.2
+  peer:
+    "@types/react": ^19.0.0
+    "@types/react-dom": ^19.0.0
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  prod:
+    "@tanstack/react-store": ^0.11.0
+    "@tanstack/store": 0.11.0
+
+linkWorkspacePackages: true
+
+onlyBuiltDependencies:
+  - esbuild
+  - rolldown
+
+preferWorkspacePackages: true

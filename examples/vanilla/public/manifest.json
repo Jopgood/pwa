@@ -1,0 +1,17 @@
+{
+  "name": "@jop/pwa-core Demo",
+  "short_name": "PWA Demo",
+  "description": "Demo app for @jop/pwa-core — headless PWA primitives",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#863bff",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

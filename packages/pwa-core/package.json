@@ -1,0 +1,45 @@
+{
+  "name": "@jop/pwa-core",
+  "version": "0.0.1",
+  "description": "Headless, type-safe PWA primitives for managing push notification subscriptions",
+  "author": "Jopgood",
+  "license": "MIT",
+  "keywords": [
+    "pwa",
+    "push-notifications",
+    "service-worker",
+    "typescript",
+    "headless"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/store": "catalog:prod"
+  }
+}
