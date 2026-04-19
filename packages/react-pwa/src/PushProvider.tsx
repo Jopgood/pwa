@@ -1,4 +1,4 @@
-import { PWAManager } from "@jop/pwa-core";
+import { PWAManager } from "@jopgood/pwa-core";
 import * as React from "react";
 
 export const PushContext = React.createContext<PWAManager | undefined>(

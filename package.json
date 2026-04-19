@@ -5,8 +5,8 @@
   "packageManager": "pnpm@10.18.0",
   "scripts": {
     "build": "tsdown",
-    "build:core": "tsdown -F @jop/pwa-core",
-    "build:react": "tsdown -F @jop/react-pwa",
+    "build:core": "tsdown -F @jopgood/pwa-core",
+    "build:react": "tsdown -F @jopgood/react-pwa",
     "dev": "tsdown --watch",
     "clean": "pnpm -r exec rm -rf dist",
     "test:types": "pnpm -r test:types",

@@ -5,14 +5,14 @@
 <br />
 
 <div align="center">
-  <a href="https://npmjs.com/package/@jop/pwa-core">
-    <img alt="npm downloads" src="https://img.shields.io/npm/dm/@jop/pwa-core.svg" />
+  <a href="https://npmjs.com/package/@jopgood/pwa-core">
+    <img alt="npm downloads" src="https://img.shields.io/npm/dm/@jopgood/pwa-core.svg" />
   </a>
   <a href="https://github.com/jopgood/pwa">
     <img alt="github stars" src="https://img.shields.io/github/stars/jopgood/pwa.svg?style=social&label=Star" />
   </a>
-  <a href="https://bundlephobia.com/result?p=@jop/pwa-core">
-    <img alt="bundle size" src="https://badgen.net/bundlephobia/minzip/@jop/pwa-core" />
+  <a href="https://bundlephobia.com/result?p=@jopgood/pwa-core">
+    <img alt="bundle size" src="https://badgen.net/bundlephobia/minzip/@jopgood/pwa-core" />
   </a>
 </div>
 
@@ -30,13 +30,13 @@ Headless, type-safe PWA primitives for the web. Manage push notification subscri
 
 ## Packages
 
-- [`@jop/pwa-core`](./packages/pwa-core) — framework-agnostic core
-- [`@jop/react-pwa`](./packages/react-pwa) — React adapter with hooks and a provider
+- [`@jopgood/pwa-core`](./packages/pwa-core) — framework-agnostic core
+- [`@jopgood/react-pwa`](./packages/react-pwa) — React adapter with hooks and a provider
 
 ## Quick start
 
 ```ts
-import { PWAManager } from '@jop/pwa-core'
+import { PWAManager } from '@jopgood/pwa-core'
 
 const manager = new PWAManager({
   serviceWorkerUrl: '/sw.js',
@@ -54,8 +54,8 @@ manager.subscribe()
 ### With React
 
 ```tsx
-import { PWAManager } from '@jop/pwa-core'
-import { PushProvider, usePushNotifications } from '@jop/react-pwa'
+import { PWAManager } from '@jopgood/pwa-core'
+import { PushProvider, usePushNotifications } from '@jopgood/react-pwa'
 
 const manager = new PWAManager({
   serviceWorkerUrl: '/sw.js',

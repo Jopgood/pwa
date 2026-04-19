@@ -1,6 +1,6 @@
 "use client";
 
-import { usePushNotifications } from "@jop/react-pwa";
+import { usePushNotifications } from "@jopgood/react-pwa";
 
 export default function Home() {
   const {
@@ -22,7 +22,7 @@ export default function Home() {
     <main style={styles.main}>
       <header style={styles.header}>
         <h1 style={styles.title}>
-          <code style={styles.code}>@jop/react-pwa</code>
+          <code style={styles.code}>@jopgood/react-pwa</code>
         </h1>
         <p style={styles.subtitle}>Next.js App Router demo</p>
       </header>
@@ -67,7 +67,7 @@ export default function Home() {
             onClick={async () => {
               const reg = await navigator.serviceWorker.ready;
               reg.showNotification("Test notification", {
-                body: "Hello from @jop/react-pwa!",
+                body: "Hello from @jopgood/react-pwa!",
               });
             }}
             disabled={permission !== "granted"}

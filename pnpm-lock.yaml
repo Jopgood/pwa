@@ -64,7 +64,7 @@ importers:
 
   examples/nextjs:
     dependencies:
-      '@jop/react-pwa':
+      '@jopgood/react-pwa':
         specifier: workspace:*
         version: link:../../packages/react-pwa
       next:
@@ -107,7 +107,7 @@ importers:
 
   packages/react-pwa:
     dependencies:
-      '@jop/pwa-core':
+      '@jopgood/pwa-core':
         specifier: workspace:*
         version: link:../pwa-core
       '@tanstack/react-store':

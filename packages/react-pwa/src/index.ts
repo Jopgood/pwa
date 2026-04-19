@@ -4,5 +4,5 @@ export type { PushProviderProps } from "./PushProvider";
 export { usePushNotifications } from "./usePushNotifications";
 export { usePermission } from "./usePermission";
 
-// re-export from @jop/pwa
-export * from "@jop/pwa-core";
+// re-export from @jopgood/pwa
+export * from "@jopgood/pwa-core";

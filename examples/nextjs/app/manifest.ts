@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "@jop/react-pwa Demo",
+    name: "@jopgood/react-pwa Demo",
     short_name: "PWA Demo",
-    description: "Demo app for @jop/react-pwa — React adapter for @jop/pwa-core",
+    description: "Demo app for @jopgood/react-pwa — React adapter for @jopgood/pwa-core",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

@@ -1,7 +1,7 @@
 {
-  "name": "@jop/react-pwa",
+  "name": "@jopgood/react-pwa",
   "version": "0.0.1",
-  "description": "React adapter for @jop/pwa-core",
+  "description": "React adapter for @jopgood/pwa-core",
   "author": "Jopgood",
   "license": "MIT",
   "keywords": [
@@ -39,7 +39,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@jop/pwa-core": "workspace:*",
+    "@jopgood/pwa-core": "workspace:*",
     "@tanstack/store": "catalog:prod",
     "@tanstack/react-store": "catalog:prod"
   },

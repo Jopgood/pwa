@@ -1,7 +1,7 @@
 {
-  "name": "@jop/pwa-core Demo",
+  "name": "@jopgood/pwa-core Demo",
   "short_name": "PWA Demo",
-  "description": "Demo app for @jop/pwa-core — headless PWA primitives",
+  "description": "Demo app for @jopgood/pwa-core — headless PWA primitives",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

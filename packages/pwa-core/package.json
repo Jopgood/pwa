@@ -1,5 +1,5 @@
 {
-  "name": "@jop/pwa-core",
+  "name": "@jopgood/pwa-core",
   "version": "0.0.1",
   "description": "Headless, type-safe PWA primitives for managing push notification subscriptions",
   "author": "Jopgood",

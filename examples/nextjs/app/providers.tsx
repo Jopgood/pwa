@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { PushProvider, PWAManager } from "@jop/react-pwa";
+import { PushProvider, PWAManager } from "@jopgood/react-pwa";
 import type * as React from "react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {

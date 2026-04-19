@@ -1,4 +1,4 @@
-import type { PWAManager } from "@jop/pwa-core";
+import type { PWAManager } from "@jopgood/pwa-core";
 import { usePWAManager } from "./PushProvider";
 
 import { useSelector } from "@tanstack/react-store";
