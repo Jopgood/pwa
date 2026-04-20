@@ -20,6 +20,7 @@
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "catalog:dev",
     "prettier": "catalog:dev",
+    "publint": "^0.3.18",
     "tsdown": "catalog:dev",
     "typescript": "catalog:dev"
   },
