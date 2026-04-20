@@ -16,7 +16,7 @@ permissions:
 jobs:
   release:
     name: Release
-    if: github.repository_owner == 'jopgood'
+    if: github.repository_owner == 'Jopgood'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
