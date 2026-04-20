@@ -36,52 +36,56 @@ Headless, type-safe PWA primitives for the web. Manage push notification subscri
 ## Quick start
 
 ```ts
-import { PWAManager } from '@jopgood/pwa-core'
+import { PWAManager } from "@jopgood/pwa-core";
 
 const manager = new PWAManager({
-  serviceWorkerUrl: '/sw.js',
-  vapidPublicKey: 'YOUR_VAPID_PUBLIC_KEY',
+  serviceWorkerUrl: "/sw.js",
+  vapidPublicKey: "YOUR_VAPID_PUBLIC_KEY",
   onSubscriptionChange: (subscription) => {
     // send subscription to your backend
   },
-})
+});
 
-manager.mount()
-manager.requestNotificationPermission()
-manager.subscribe()
+manager.mount();
+manager.requestNotificationPermission();
+manager.subscribe();
 ```
 
 ### With React
 
 ```tsx
-import { PWAManager } from '@jopgood/pwa-core'
-import { PushProvider, usePushNotifications } from '@jopgood/react-pwa'
+import { PWAManager } from "@jopgood/pwa-core";
+import { PushProvider, usePushNotifications } from "@jopgood/react-pwa";
 
 const manager = new PWAManager({
-  serviceWorkerUrl: '/sw.js',
-  vapidPublicKey: 'YOUR_VAPID_PUBLIC_KEY',
-})
+  serviceWorkerUrl: "/sw.js",
+  vapidPublicKey: "YOUR_VAPID_PUBLIC_KEY",
+});
 
 function App() {
   return (
     <PushProvider manager={manager}>
       <PushDemo />
     </PushProvider>
-  )
+  );
 }
 
 function PushDemo() {
-  const { permission, isSubscribed, subscribe, requestPermission } = usePushNotifications()
+  const { permission, isSubscribed, subscribe, requestPermission } =
+    usePushNotifications();
 
   return (
     <div>
       <p>Permission: {permission}</p>
       <button onClick={requestPermission}>Request permission</button>
-      <button onClick={subscribe} disabled={permission !== 'granted' || isSubscribed}>
+      <button
+        onClick={subscribe}
+        disabled={permission !== "granted" || isSubscribed}
+      >
         Subscribe
       </button>
     </div>
-  )
+  );
 }
 ```
 

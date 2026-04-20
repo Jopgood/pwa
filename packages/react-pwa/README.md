@@ -20,34 +20,38 @@
 React adapter for [`@jopgood/pwa-core`](https://github.com/jopgood/pwa/tree/main/packages/pwa-core). Hooks and a provider for push subscriptions, service worker lifecycle, and permissions.
 
 ```tsx
-import { PWAManager } from '@jopgood/pwa-core'
-import { PushProvider, usePushNotifications } from '@jopgood/react-pwa'
+import { PWAManager } from "@jopgood/pwa-core";
+import { PushProvider, usePushNotifications } from "@jopgood/react-pwa";
 
 const manager = new PWAManager({
-  serviceWorkerUrl: '/sw.js',
-  vapidPublicKey: 'YOUR_VAPID_PUBLIC_KEY',
-})
+  serviceWorkerUrl: "/sw.js",
+  vapidPublicKey: "YOUR_VAPID_PUBLIC_KEY",
+});
 
 function App() {
   return (
     <PushProvider manager={manager}>
       <PushDemo />
     </PushProvider>
-  )
+  );
 }
 
 function PushDemo() {
-  const { permission, isSubscribed, subscribe, requestPermission } = usePushNotifications()
+  const { permission, isSubscribed, subscribe, requestPermission } =
+    usePushNotifications();
 
   return (
     <div>
       <p>Permission: {permission}</p>
       <button onClick={requestPermission}>Request permission</button>
-      <button onClick={subscribe} disabled={permission !== 'granted' || isSubscribed}>
+      <button
+        onClick={subscribe}
+        disabled={permission !== "granted" || isSubscribed}
+      >
         Subscribe
       </button>
     </div>
-  )
+  );
 }
 ```
 

@@ -20,19 +20,19 @@
 Headless, type-safe PWA primitives. Manage push notification subscriptions, service worker lifecycle, and permissions through a framework-agnostic API.
 
 ```ts
-import { PWAManager } from '@jopgood/pwa-core'
+import { PWAManager } from "@jopgood/pwa-core";
 
 const manager = new PWAManager({
-  serviceWorkerUrl: '/sw.js',
-  vapidPublicKey: 'YOUR_VAPID_PUBLIC_KEY',
+  serviceWorkerUrl: "/sw.js",
+  vapidPublicKey: "YOUR_VAPID_PUBLIC_KEY",
   onSubscriptionChange: (subscription) => {
     // send subscription to your backend
   },
-})
+});
 
-manager.mount()
-manager.requestNotificationPermission()
-manager.subscribe()
+manager.mount();
+manager.requestNotificationPermission();
+manager.subscribe();
 ```
 
 Pair with [`@jopgood/react-pwa`](https://github.com/jopgood/pwa/tree/main/packages/react-pwa) for React hooks.

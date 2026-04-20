@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
-  "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "jopgood/pwa" }],
+  "changelog": [
+    "@svitejs/changesets-changelog-github-compact",
+    { "repo": "jopgood/pwa" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
