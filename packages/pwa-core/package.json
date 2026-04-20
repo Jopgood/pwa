@@ -4,6 +4,15 @@
   "description": "Headless, type-safe PWA primitives for managing push notification subscriptions",
   "author": "Jopgood",
   "license": "MIT",
+  "homepage": "https://github.com/Jopgood/pwa#readme",
+  "bugs": {
+    "url": "https://github.com/Jopgood/pwa/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jopgood/pwa.git",
+    "directory": "packages/pwa-core"
+  },
   "keywords": [
     "pwa",
     "push-notifications",

@@ -4,6 +4,15 @@
   "description": "React adapter for @jopgood/pwa-core",
   "author": "Jopgood",
   "license": "MIT",
+  "homepage": "https://github.com/Jopgood/pwa#readme",
+  "bugs": {
+    "url": "https://github.com/Jopgood/pwa/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jopgood/pwa.git",
+    "directory": "packages/react-pwa"
+  },
   "keywords": [
     "react",
     "pwa",
