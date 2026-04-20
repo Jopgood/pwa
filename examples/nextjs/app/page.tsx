@@ -30,11 +30,31 @@ export default function Home() {
       <section style={styles.card}>
         <h2 style={styles.sectionTitle}>State</h2>
         <div style={styles.grid}>
-          <StateRow label="isSupported" value={String(isSupported)} variant={isSupported ? "green" : "neutral"} />
-          <StateRow label="swState" value={swState} variant={swStateVariant(swState)} />
-          <StateRow label="permission" value={permission} variant={permVariant(permission)} />
-          <StateRow label="isSubscribed" value={String(isSubscribed)} variant={isSubscribed ? "green" : "neutral"} />
-          <StateRow label="isLoading" value={String(isLoading)} variant={isLoading ? "yellow" : "neutral"} />
+          <StateRow
+            label="isSupported"
+            value={String(isSupported)}
+            variant={isSupported ? "green" : "neutral"}
+          />
+          <StateRow
+            label="swState"
+            value={swState}
+            variant={swStateVariant(swState)}
+          />
+          <StateRow
+            label="permission"
+            value={permission}
+            variant={permVariant(permission)}
+          />
+          <StateRow
+            label="isSubscribed"
+            value={String(isSubscribed)}
+            variant={isSubscribed ? "green" : "neutral"}
+          />
+          <StateRow
+            label="isLoading"
+            value={String(isLoading)}
+            variant={isLoading ? "yellow" : "neutral"}
+          />
           <StateRow
             label="error"
             value={error ? error.message : "null"}
@@ -85,7 +105,9 @@ export default function Home() {
       {subscription && (
         <section style={styles.card}>
           <h2 style={styles.sectionTitle}>Subscription</h2>
-          <pre style={styles.pre}>{JSON.stringify(subscription.toJSON(), null, 2)}</pre>
+          <pre style={styles.pre}>
+            {JSON.stringify(subscription.toJSON(), null, 2)}
+          </pre>
         </section>
       )}
     </main>
@@ -175,15 +197,52 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "1.25rem",
     marginBottom: "1rem",
   },
-  sectionTitle: { fontSize: "0.75rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", color: "#888", marginBottom: "0.875rem" },
+  sectionTitle: {
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    textTransform: "uppercase",
+    letterSpacing: "0.08em",
+    color: "#888",
+    marginBottom: "0.875rem",
+  },
   grid: { display: "flex", flexDirection: "column", gap: "0.5rem" },
-  row: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  label: { fontFamily: "var(--font-geist-mono, monospace)", fontSize: "0.85rem" },
-  badge: { fontSize: "0.75rem", fontWeight: 600, padding: "0.2em 0.6em", borderRadius: 9999 },
+  row: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  label: {
+    fontFamily: "var(--font-geist-mono, monospace)",
+    fontSize: "0.85rem",
+  },
+  badge: {
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    padding: "0.2em 0.6em",
+    borderRadius: 9999,
+  },
   actions: { display: "flex", flexDirection: "column", gap: "0.5rem" },
-  button: { padding: "0.6rem 1rem", borderRadius: 6, border: "none", cursor: "pointer", fontWeight: 600, fontSize: "0.9rem", transition: "opacity 0.15s" },
-  buttonDisabled: { background: "rgba(128,128,128,0.15)", color: "#888", cursor: "not-allowed" },
-  pre: { fontFamily: "var(--font-geist-mono, monospace)", fontSize: "0.75rem", overflowX: "auto", whiteSpace: "pre-wrap", wordBreak: "break-all" },
+  button: {
+    padding: "0.6rem 1rem",
+    borderRadius: 6,
+    border: "none",
+    cursor: "pointer",
+    fontWeight: 600,
+    fontSize: "0.9rem",
+    transition: "opacity 0.15s",
+  },
+  buttonDisabled: {
+    background: "rgba(128,128,128,0.15)",
+    color: "#888",
+    cursor: "not-allowed",
+  },
+  pre: {
+    fontFamily: "var(--font-geist-mono, monospace)",
+    fontSize: "0.75rem",
+    overflowX: "auto",
+    whiteSpace: "pre-wrap",
+    wordBreak: "break-all",
+  },
 };
 
 const badgeColor: Record<string, React.CSSProperties> = {

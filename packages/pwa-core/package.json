@@ -1,6 +1,6 @@
 {
   "name": "@jopgood/pwa-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Headless, type-safe PWA primitives for managing push notification subscriptions",
   "author": "Jopgood",
   "license": "MIT",
