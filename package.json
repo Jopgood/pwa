@@ -8,6 +8,7 @@
     "build:core": "tsdown -F @jopgood/pwa-core",
     "build:react": "tsdown -F @jopgood/react-pwa",
     "dev": "tsdown --watch",
+    "dev:web": "pnpm dev --filter apps/web",
     "clean": "pnpm -r exec rm -rf dist",
     "test:types": "pnpm -r test:types",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
@@ -22,6 +23,7 @@
     "prettier": "catalog:dev",
     "publint": "^0.3.18",
     "tsdown": "catalog:dev",
+    "turbo": "^2.9.12",
     "typescript": "catalog:dev"
   },
   "engines": {

@@ -1,0 +1,114 @@
+---
+title: Quick Start
+description: Register a service worker, request notification permission, and subscribe a user, without any framework.
+---
+
+<Lead>
+A working push subscription, without a framework or adapter.
+</Lead>
+
+## Steps
+
+<Steps>
+  <Step>
+    ### Install the package
+
+    ```bash
+    npm install @jopgood/pwa-core
+    ```
+  </Step>
+
+  <Step>
+    ### Create a service worker
+
+    Add `public/sw.js` with at minimum a `push` handler. The core registers this file; it doesn't generate it. See the [Service Worker API on MDN ↗](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) for a full walkthrough.
+
+    ```js
+    self.addEventListener("push", (event) => {
+      const data = event.data?.json() ?? {};
+      event.waitUntil(
+        self.registration.showNotification(data.title ?? "Notification", {
+          body: data.body,
+        }),
+      );
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Construct the manager and mount
+
+    Construction is safe to run on the server. `mount()` is what touches the browser, so call it after hydration.
+
+    ```ts
+    import { PWAManager } from "@jopgood/pwa-core";
+
+    const manager = new PWAManager({
+      serviceWorkerUrl: "/sw.js",
+      vapidPublicKey: "YOUR_VAPID_PUBLIC_KEY",
+      onSubscriptionChange: (subscription) => {
+        if (subscription) {
+          fetch("/api/push/register", {
+            method: "POST",
+            body: JSON.stringify(subscription),
+          });
+        }
+      },
+    });
+
+    manager.mount();
+    ```
+  </Step>
+
+  <Step>
+    ### Request permission, then subscribe
+
+    `subscribe()` requires `permission === "granted"`. Request it from a user gesture (click) so the browser will show the prompt.
+
+    ```ts
+    document.querySelector("#enable-push").addEventListener("click", async () => {
+      const permission = await manager.requestNotificationPermission();
+      if (permission === "granted") {
+        await manager.subscribe();
+      }
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Verify in the browser
+
+    Open DevTools → Application → Service Workers (worker should be `activated`) and Application → Push messaging (subscription should be listed).
+  </Step>
+</Steps>
+
+## Reading state without a framework
+
+The manager exposes its store directly. Subscribe to it the same way an adapter would:
+
+```ts
+const unsubscribe = manager.store.subscribe(() => {
+  const { isSubscribed, permission, swUpdateAvailable } = manager.store.state;
+  // update your UI
+});
+```
+
+## Handling SW updates
+
+When a new service worker installs, `state.swUpdateAvailable` flips to `true`. Prompt the user, then activate:
+
+```ts
+if (manager.store.state.swUpdateAvailable) {
+  manager.activateWaiting();
+}
+```
+
+The page reloads once the new worker takes control.
+
+## Tear it down
+
+```ts
+manager.unmount();
+```
+
+Removes the internal listeners. Useful in tests and HMR.

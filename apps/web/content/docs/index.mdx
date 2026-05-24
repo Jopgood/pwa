@@ -1,0 +1,31 @@
+---
+title: What is Jopgood PWA?
+description: Headless, type-safe primitives for managing push notification subscriptions, service-worker lifecycle, and browser permissions.
+---
+
+<Lead>
+Jopgood PWA is a small core for the push-notification side of a PWA, plus optional framework adapters. No UI is included, and the service worker stays your responsibility.
+</Lead>
+
+<Callout variant="warning" title="Pre-release">
+The API will change before 1.0. Pin exact versions until then.
+</Callout>
+
+## Why core + adapter?
+
+Push subscriptions, the [Notification permission](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API/Using_the_Notifications_API), and the [service-worker update lifecycle](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#updating_your_service_worker) each have their own quirks. Most projects re-implement them, badly, in a `useEffect`. Jopgood PWA splits them out:
+
+- [@jopgood/pwa-core](https://npmjs.com/package/@jopgood/pwa-core) is a framework-agnostic class that holds the state.
+- [@jopgood/react-pwa](https://npmjs.com/package/@jopgood/react-pwa) is a React adapter - a provider plus hooks over the same store.
+
+## Technical notes
+
+- Construction is safe on the server. Browser-only work runs in `mount()`.
+- State lives in a single [@tanstack/store](https://github.com/TanStack/store) instance and is surfaced through framework adapters.
+- Written in TypeScript with strict types.
+
+## What it doesn't do
+
+- Generate or host a service worker - you'll have to manage the `sw.js` file yourself. [Guide on MDN ↗](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
+- Send push notifications - you'll need to run a push server (typically via [`web-push`](https://www.npmjs.com/package/web-push) on Node) and handle POSTing the subscription to your backend.
+- Capture `beforeinstallprompt` or manage install banners.

@@ -1,0 +1,57 @@
+---
+title: API Reference
+description: Complete public surface of @jopgood/pwa-core. The PWAManager class and the reactive store it owns.
+---
+
+<Lead>
+Everything exported from `@jopgood/pwa-core`. Anything not listed here is internal and may change.
+</Lead>
+
+## `new PWAManager(options)`
+
+Constructs a manager. Safe to call on the server; no browser APIs are touched until `mount()`.
+
+### Options
+
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `serviceWorkerUrl` | `string` | — | URL of your service-worker file. **Required.** |
+| `vapidPublicKey` | `string` | — | URL-safe base64 VAPID public key for push subscriptions. **Required.** |
+| `onSubscriptionChange` | `(subscription: PushSubscription \| null) => void` | — | Fired after `mount()` syncs the existing subscription, after a successful `subscribe()`, and after `unsubscribe()` (with `null`). |
+| `onError` | `(error: Error) => void` | — | Fired on service-worker registration errors and `subscribe()` failures. |
+
+## Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+| `mount()` | `void` | Registers the service worker, reads the current permission, and syncs any existing push subscription. Call once after hydration. |
+| `unmount()` | `void` | Removes internal listeners. Does not unregister the SW or unsubscribe. |
+| `requestNotificationPermission()` | `Promise<NotificationPermission \| undefined>` | Prompts the user if `permission === "default"`. Returns `undefined` in environments without the Notification API. |
+| `subscribe()` | `Promise<void>` | Creates a `PushSubscription` against the configured VAPID key. Requires granted permission and an active SW. Fires `onSubscriptionChange`. |
+| `unsubscribe()` | `Promise<void>` | Unsubscribes the current push subscription, if any. Fires `onSubscriptionChange` with `null`. |
+| `activateWaiting()` | `void` | Sends `SKIP_WAITING` to a waiting service worker. The page reloads when the new worker takes control. No-op if nothing is waiting. |
+
+## `manager.store`
+
+A [@tanstack/store](https://github.com/TanStack/store) instance holding the reactive state. Read via `manager.store.state`; subscribe via `manager.store.subscribe(listener)`.
+
+### `PWAState`
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `permission` | `"default" \| "granted" \| "denied"` | Current Notification permission. |
+| `isSupported` | `boolean` | `true` once `navigator.serviceWorker` is detected during `mount()`. |
+| `isSubscribed` | `boolean` | Whether a `PushSubscription` exists. |
+| `subscription` | `PushSubscription \| null` | The active push subscription, if any. |
+| `swState` | `"idle" \| "installing" \| "waiting" \| "active" \| "error"` | Lifecycle of the registered service worker. |
+| `swUpdateAvailable` | `boolean` | `true` when a new SW has installed and is waiting to activate. Flips back to `false` after `activateWaiting()`. |
+| `isLoading` | `boolean` | `true` while the initial registration is in flight. |
+| `error` | `Error \| null` | Last error from registration or subscription. |
+
+## Internal classes
+
+`SWRegistrar`, `PermissionManager`, and `SubscriptionManager` are exported from the package barrel so adapters can compose them directly. They're not covered here. Read the source in [packages/pwa-core/src ↗](https://github.com/jopgood/pwa-package/tree/main/packages/pwa-core/src) if that level of access is needed.
+
+<Callout variant="warning" title="Pre-1.0">
+Anything outside the table above (internal classes, `createPWAStore`) is not covered by semver yet. Pin exact versions.
+</Callout>

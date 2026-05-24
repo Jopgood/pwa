@@ -1,0 +1,29 @@
+---
+title: Installation
+description: Install the core package, plus an optional adapter for your framework.
+---
+
+<Lead>
+Install the core first. Add an adapter only if you want framework bindings.
+</Lead>
+
+## Core package
+
+```bash
+npm install @jopgood/pwa-core
+```
+
+## React adapter
+
+```bash
+npm install @jopgood/pwa-core @jopgood/react-pwa
+```
+
+<Callout variant="info" title="Peer deps">
+The React adapter declares `react` and `react-dom` ≥ 18 as peer dependencies. Both packages require Node ≥ 20 for local development.
+</Callout>
+
+## You also need
+
+- A service-worker file at a known URL, typically `public/sw.js`. The core registers it, but doesn't generate it. [Service Worker API on MDN ↗](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+- A VAPID public key for push subscriptions. Generate the key pair with [`web-push`](https://www.npmjs.com/package/web-push) (or any VAPID-compatible tool) and keep the private key on your backend. [VAPID overview ↗](https://datatracker.ietf.org/doc/html/rfc8292)

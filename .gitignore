@@ -3,8 +3,15 @@ node_modules
 .env.local
 .env.*.local
 dist
-.claude
-docs
+.next
+out
+*.tsbuildinfo
+# Personal Claude state (settings.local.json etc.), but keep shared
+# project skills checked in so future sessions and teammates pick them up.
+.claude/*
+!.claude/skills
+# Repo-root /docs only (SPEC dump); does NOT match apps/web/content/docs.
+/docs
 coverage
 .DS_Store
 *.log

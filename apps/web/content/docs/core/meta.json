@@ -1,0 +1,5 @@
+{
+  "title": "@jopgood/pwa-core",
+  "description": "Framework-agnostic PWA toolkit",
+  "pages": ["index", "quick-start", "api"]
+}

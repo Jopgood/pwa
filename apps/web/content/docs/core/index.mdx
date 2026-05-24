@@ -1,0 +1,48 @@
+---
+title: Overview
+description: The framework-agnostic core. A single PWAManager class covering service-worker registration, the Notification permission, and the PushSubscription lifecycle.
+---
+
+<Lead>
+`@jopgood/pwa-core` is one class, `PWAManager`, composing three concerns over a shared reactive store.
+</Lead>
+
+## What it does
+
+- **Service-worker registration** with lifecycle tracking (`installing` → `waiting` → `active`) and a "skip waiting" trigger for activating updates.
+- **Notification permission** - reads the current state, requests it on demand, mirrors it into the store.
+- **Push subscription** - subscribes against your VAPID key, fires a callback when the subscription changes so you can send it to your backend, supports unsubscribe.
+
+All three write into a single [@tanstack/store](https://github.com/TanStack/store) instance exposed as `manager.store`. Framework adapters subscribe to that store; direct subscriptions work too.
+
+## What it doesn't do
+
+- Routing, UI, or banners. No components are included.
+- Caching strategies. Those belong in the `sw.js` file. [Caching strategies on MDN ↗](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#caching_strategies)
+- Sending push messages. You'll need to run a push server (typically [`web-push`](https://www.npmjs.com/package/web-push)) and POST the subscription to it from `onSubscriptionChange`.
+
+## When to use the core directly
+
+- The project isn't using React (vanilla JS, Web Components, a Chrome extension).
+- A single source of truth is needed across multiple framework islands.
+- A custom framework adapter is being built.
+
+For React, the [adapter](/docs/react) wires the manager into context.
+
+## Where next
+
+<LinkedCard
+  href="/docs/core/quick-start"
+  eyebrow="Tutorial"
+  title="Quick start"
+>
+  Subscribe a user to push notifications in under a minute.
+</LinkedCard>
+
+<LinkedCard
+  href="/docs/core/api"
+  eyebrow="Reference"
+  title="API reference"
+>
+  Complete surface of `PWAManager` and the store.
+</LinkedCard>

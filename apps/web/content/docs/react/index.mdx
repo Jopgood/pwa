@@ -1,0 +1,34 @@
+---
+title: Overview
+description: A React adapter for @jopgood/pwa-core. One provider, three hooks, no extra state.
+---
+
+<Lead>
+`@jopgood/react-pwa` exposes the core's store through React context. Everything available here can also be done with the core directly.
+</Lead>
+
+## Exports
+
+- `<PushProvider>` - wires a `PWAManager` into context and calls `mount()` / `unmount()` for you.
+- `usePushNotifications()` - full state and all actions in one hook.
+- `usePermission()` - permission state and a request trigger.
+- `useSWUpdate()` - `swUpdateAvailable` flag and an `activateWaiting` trigger.
+- `usePWAManager()` - escape hatch to grab the manager from context.
+
+## Not included
+
+- A pre-built subscribe button. You'll build the UI yourself.
+- Caching strategies. Those live in the `sw.js` file. [Caching strategies on MDN ↗](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#caching_strategies)
+- An install banner. The core doesn't capture `beforeinstallprompt`.
+
+## How it's wired
+
+Construct the `PWAManager` outside React and pass it to the provider. The hooks read from `manager.store` via [@tanstack/react-store](https://github.com/TanStack/store), so there's no parallel React state to keep in sync.
+
+## Peer dependencies
+
+| Package | Version |
+| ------- | ------- |
+| `react` | ≥ 18 |
+| `react-dom` | ≥ 18 |
+| `@jopgood/pwa-core` | workspace match |
