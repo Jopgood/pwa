@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { RootProvider } from "fumadocs-ui/provider/next"
+import SearchDialog from "@/components/search-dialog"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,12 +49,11 @@ export default function RootLayout({
             // ThemeProvider passthrough above.
             theme={{ enabled: false }}
             search={{
-              options: {
-                // Built at /app/api/search/route.ts via createFromSource +
-                // staticGET; emitted as a static JSON asset by `output: "export"`.
-                type: "static",
-                api: "/api/search",
-              },
+              // Custom dialog using our own shadcn primitives. The hook
+              // inside it points at /api/search (built by createFromSource
+              // + staticGET, emitted as a static JSON asset by
+              // `output: "export"`).
+              SearchDialog,
             }}
           >
             {children}
