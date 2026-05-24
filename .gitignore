@@ -3,7 +3,13 @@ node_modules
 .env.local
 .env.*.local
 dist
-.claude
+.next
+out
+*.tsbuildinfo
+# Personal Claude state (settings.local.json etc.), but keep shared
+# project skills checked in so future sessions and teammates pick them up.
+.claude/*
+!.claude/skills
 docs
 coverage
 .DS_Store

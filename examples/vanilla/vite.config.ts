@@ -13,4 +13,7 @@ export default defineConfig({
   define: {
     __PKG_VERSION__: JSON.stringify(pkg.version),
   },
+  server: {
+    port: 3006,
+  },
 });
