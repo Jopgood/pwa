@@ -43,7 +43,21 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <RootProvider>{children}</RootProvider>
+          <RootProvider
+            // Light-only for now; next-themes is also disabled by our
+            // ThemeProvider passthrough above.
+            theme={{ enabled: false }}
+            search={{
+              options: {
+                // Built at /app/api/search/route.ts via createFromSource +
+                // staticGET; emitted as a static JSON asset by `output: "export"`.
+                type: "static",
+                api: "/api/search",
+              },
+            }}
+          >
+            {children}
+          </RootProvider>
         </ThemeProvider>
       </body>
     </html>

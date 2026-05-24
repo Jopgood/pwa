@@ -2,13 +2,34 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import {
-  InputGroup,
-  InputGroupInput,
-  InputGroupAddon,
-} from "@/components/ui/input-group"
+import { useSearchContext } from "fumadocs-ui/contexts/search"
 import { Kbd } from "@/components/ui/kbd"
 import { Icons } from "@/components/icons"
+import { cn } from "@/lib/utils"
+
+/**
+ * Visually mimics an input but is actually a button that opens the
+ * fumadocs SearchDialog. A real <input> would compete with the dialog's
+ * own input for focus and for typed characters.
+ */
+function SearchTrigger() {
+  const { setOpenSearch } = useSearchContext()
+  return (
+    <button
+      type="button"
+      onClick={() => setOpenSearch(true)}
+      aria-label="Search docs"
+      className={cn(
+        "ml-auto flex h-10 w-full max-w-md min-w-0 items-center justify-between gap-2 rounded-(--radius) border-2 border-border bg-background px-3 text-left text-sm shadow-md transition-colors",
+        "hover:bg-muted",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      )}
+    >
+      <span className="truncate text-muted-foreground">Search docs…</span>
+      <Kbd>⌘K</Kbd>
+    </button>
+  )
+}
 
 export function SiteHeader() {
   return (
@@ -32,12 +53,7 @@ export function SiteHeader() {
           v0.0.2
         </span>
 
-        <InputGroup className="ml-auto w-full max-w-md">
-          <InputGroupInput id="search-docs" placeholder="Search docs…" />
-          <InputGroupAddon align="inline-end">
-            <Kbd>⌘K</Kbd>
-          </InputGroupAddon>
-        </InputGroup>
+        <SearchTrigger />
 
         <Button asChild variant="inverted" className="font-mono">
           <Link
