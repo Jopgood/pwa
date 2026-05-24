@@ -1,0 +1,144 @@
+---
+title: Quick Start
+description: Construct a PWAManager, wrap your app with PushProvider, and drive push UI from a hook.
+---
+
+<Lead>
+Construct a manager, wrap the app with the provider, and read state from a hook.
+</Lead>
+
+## Steps
+
+<Steps>
+  <Step>
+    ### Install
+
+    ```bash
+    npm install @jopgood/pwa-core @jopgood/react-pwa
+    ```
+  </Step>
+
+  <Step>
+    ### Construct the manager outside React
+
+    Construct once, at module scope, so React isn't recreating it on every render. Construction is safe on the server.
+
+    ```ts
+    // lib/pwa.ts
+    import { PWAManager } from "@jopgood/pwa-core";
+
+    export const pwaManager = new PWAManager({
+      serviceWorkerUrl: "/sw.js",
+      vapidPublicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+      onSubscriptionChange: async (subscription) => {
+        if (subscription) {
+          await fetch("/api/push/register", {
+            method: "POST",
+            body: JSON.stringify(subscription),
+          });
+        }
+      },
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Wrap your app
+
+    The provider calls `manager.mount()` on mount and `manager.unmount()` on unmount.
+
+    ```tsx
+    import { PushProvider } from "@jopgood/react-pwa";
+    import { pwaManager } from "./lib/pwa";
+
+    export function App({ children }: { children: React.ReactNode }) {
+      return <PushProvider manager={pwaManager}>{children}</PushProvider>;
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Use a hook
+
+    Anywhere inside the provider, drive UI from the store:
+
+    ```tsx
+    "use client";
+    import { usePushNotifications } from "@jopgood/react-pwa";
+
+    export function PushToggle() {
+      const { permission, isSubscribed, subscribe, unsubscribe, requestPermission } =
+        usePushNotifications();
+
+      if (permission === "default") {
+        return <button onClick={requestPermission}>Enable notifications</button>;
+      }
+      if (permission === "denied") {
+        return <p>Notifications are blocked in browser settings.</p>;
+      }
+      return isSubscribed ? (
+        <button onClick={unsubscribe}>Disable</button>
+      ) : (
+        <button onClick={subscribe}>Subscribe</button>
+      );
+    }
+    ```
+  </Step>
+</Steps>
+
+## The hooks
+
+### `usePushNotifications()`
+
+Every state field plus every action in one hook. Useful when a component needs more than one piece of state.
+
+```tsx
+const {
+  // state
+  permission,
+  isSupported,
+  isSubscribed,
+  subscription,
+  swState,
+  swUpdateAvailable,
+  isLoading,
+  error,
+  // actions
+  subscribe,
+  unsubscribe,
+  requestPermission,
+  activateWaiting,
+} = usePushNotifications();
+```
+
+### `usePermission()`
+
+Just the permission. Useful for a "request permission" button that doesn't care about the subscription.
+
+```tsx
+const { permission, requestPermission } = usePermission();
+```
+
+### `useSWUpdate()`
+
+Just the update flag, for an "update available" banner.
+
+```tsx
+function UpdateBanner() {
+  const { swUpdateAvailable, activateWaiting } = useSWUpdate();
+  if (!swUpdateAvailable) return null;
+  return <button onClick={activateWaiting}>Reload to update</button>;
+}
+```
+
+<Callout variant="note" title="Equivalent to the core">
+Each hook is a `useSelector` over `manager.store` plus a method reference. Anything available here is also available on the manager directly.
+</Callout>
+
+## Passing a manager explicitly
+
+Every hook accepts an optional `manager` argument that bypasses context. Useful in tests:
+
+```tsx
+const { permission } = usePushNotifications(testManager);
+```

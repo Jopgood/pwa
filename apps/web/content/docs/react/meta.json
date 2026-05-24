@@ -1,0 +1,5 @@
+{
+  "title": "@jopgood/react-pwa",
+  "description": "React adapter — provider, hooks, components.",
+  "pages": ["index", "quick-start"]
+}

@@ -10,7 +10,8 @@ out
 # project skills checked in so future sessions and teammates pick them up.
 .claude/*
 !.claude/skills
-docs
+# Repo-root /docs only (SPEC dump); does NOT match apps/web/content/docs.
+/docs
 coverage
 .DS_Store
 *.log
