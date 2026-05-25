@@ -1,0 +1,25 @@
+# Cloudflare Pages reads this file from the output root to set HTTP
+# response headers per path. Next.js copies public/_headers verbatim
+# into out/ during the static export.
+#
+# Syntax: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Defaults for every response — security baseline for a static docs site.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Long-cache Next's hashed asset bundles — they're content-addressed,
+# new deploys ship new filenames so the immutable hint is safe.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The search index is rebuilt on every deploy but its URL is stable
+# (/api/search). Cache for an hour so the dialog opens fast on revisits
+# without making stale indexes linger long after a deploy.
+/api/search
+  Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: application/json
