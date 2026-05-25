@@ -51,10 +51,12 @@ In the dashboard (Workers & Pages → **Create** → **Import a repository** →
 | --- | --- |
 | Root directory | _(leave blank — commands run from repo root)_ |
 | Build command | `pnpm install && pnpm build:core && pnpm build:react && pnpm --filter web build` |
-| **Production** deploy command | `pnpm --filter web deploy` |
-| **Non-production branch** deploy command | `pnpm --filter web deploy:preview` |
+| **Production** deploy command | `pnpm --filter web cf:deploy` |
+| **Non-production branch** deploy command | `pnpm --filter web cf:preview` |
 
-The `deploy` / `deploy:preview` scripts in this package's `package.json` run `wrangler deploy` / `wrangler versions upload` respectively. Running them via `pnpm --filter web` means they execute in `apps/web/`'s cwd, so wrangler finds `wrangler.jsonc` and the locally-installed `wrangler` binary (no `npx` download cost on every deploy).
+The `cf:deploy` / `cf:preview` scripts in this package's `package.json` run `wrangler deploy` / `wrangler versions upload` respectively. Running them via `pnpm --filter web` executes them in `apps/web/`'s cwd, so wrangler finds `wrangler.jsonc` and the locally-installed `wrangler` binary (no `npx` download cost on every deploy).
+
+> ⚠️ The scripts are deliberately prefixed `cf:` to dodge pnpm's built-in `deploy` command (used for [deploying a workspace package with bundled prod deps](https://pnpm.io/cli/deploy)). Naming an npm script `deploy` makes `pnpm --filter web deploy` invoke pnpm's built-in instead of the script, which fails with `ERR_PNPM_INVALID_DEPLOY_TARGET`.
 
 _(Cloudflare's monorepo guide suggests setting Root directory to the app folder and using shorter commands. That works too — see the [advanced setups doc](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/#monorepos) — but the pnpm-filter approach keeps everything driven by package scripts.)_
 
@@ -102,8 +104,9 @@ Cloudflare dashboard → Worker → **Domains & Routes** → Add custom domain. 
 ## When something breaks the deploy
 
 - **Build fails with "Cannot find module"**: packages weren't built. Build command must include `pnpm build:core && pnpm build:react` before `pnpm --filter web build`.
-- **Wrangler download warning during deploy** (`npm warn exec The following package was not found and will be installed: wrangler@…`): you're running `npx wrangler` from the wrong cwd. Use `pnpm --filter web deploy` instead — it picks up the locally-installed wrangler from `apps/web/node_modules/.bin/`, so no download.
-- **`Missing entry-point to Worker script or to assets directory`** during deploy: wrangler can't find `wrangler.jsonc`. Same root cause — deploy command must run from `apps/web/`. The `pnpm --filter web deploy` pattern handles this.
+- **Wrangler download warning during deploy** (`npm warn exec The following package was not found and will be installed: wrangler@…`): you're running `npx wrangler` from the wrong cwd. Use `pnpm --filter web cf:deploy` instead — it picks up the locally-installed wrangler from `apps/web/node_modules/.bin/`, so no download.
+- **`Missing entry-point to Worker script or to assets directory`** during deploy: wrangler can't find `wrangler.jsonc`. Same root cause — deploy command must run from `apps/web/`. The `pnpm --filter web cf:deploy` pattern handles this.
+- **`ERR_PNPM_INVALID_DEPLOY_TARGET This command requires one parameter`**: deploy command is `pnpm --filter web deploy` — that invokes pnpm's [built-in `deploy` command](https://pnpm.io/cli/deploy), not our script. Scripts must be prefixed (`cf:deploy` etc.) to avoid the collision; update the dashboard accordingly.
 - **404s on every page**: `assets.directory` in `wrangler.jsonc` is wrong, or the build never produced `out/`. Check that the build step actually ran.
 - **Headers not applied**: `_headers` must land in `out/`, not `out/public/`. Next copies from `public/` to `out/` root during export, so the source file lives at `apps/web/public/_headers`.
 - **Sidebar active state broken in prod**: trailing-slash mismatch. `next.config.mjs` does NOT set `trailingSlash: true`; the sidebar's `samePath()` helper normalises either form. If you re-enable trailing slashes, both still work.
