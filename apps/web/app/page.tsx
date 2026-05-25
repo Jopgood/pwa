@@ -1,19 +1,20 @@
-import { Button } from "@/components/retroui/Button"
+import type { Metadata } from "next"
+import Link from "next/link"
+
+// Static export can't issue an HTTP 301/302, so we ship a tiny HTML page
+// with a meta-refresh (works without JS) plus a visible fallback link.
+// The bare domain has no landing page — everything lives under /docs.
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+  other: { refresh: "0; url=/docs" },
+}
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="flex min-h-svh items-center justify-center p-6 text-sm">
+      <p>
+        Redirecting to <Link href="/docs">/docs</Link>…
+      </p>
     </div>
   )
 }
