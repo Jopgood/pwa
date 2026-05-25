@@ -10,8 +10,8 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "check-types": "tsc --noEmit",
-    "deploy": "wrangler deploy",
-    "deploy:preview": "wrangler versions upload"
+    "cf:deploy": "wrangler deploy",
+    "cf:preview": "wrangler versions upload"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
