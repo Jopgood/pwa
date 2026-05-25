@@ -68,6 +68,9 @@ _(Cloudflare's monorepo guide suggests setting Root directory to the app folder 
 | --- | --- | --- |
 | `NODE_VERSION` | `22` | Repo requires `>=20`; [`.nvmrc`](./.nvmrc) also pins 22 for local consistency. |
 | `PNPM_VERSION` | `10.18.0` | Matches `packageManager` in the root `package.json`. |
+| `NEXT_PUBLIC_SITE_URL` (production only) | `https://www.jopgood.com` | Canonical site URL, baked into the build for OG / sitemap / robots. See [`lib/site-url.ts`](./lib/site-url.ts) for the resolution order. |
+
+**Per-deploy URLs on previews.** Leave `NEXT_PUBLIC_SITE_URL` unset on non-production deploys — [`lib/site-url.ts`](./lib/site-url.ts) falls back to Cloudflare's auto-provided `CF_PAGES_URL` so preview builds emit OG / sitemap / robots URLs that point at the preview origin (not production). This is what makes link-preview validators work against PR-preview URLs.
 
 ### Build watch paths (optional but recommended)
 

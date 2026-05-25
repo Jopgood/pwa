@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next"
 import { source } from "@/lib/source"
+import { SITE_URL } from "@/lib/site-url"
 
 // Required for static export.
 export const dynamic = "force-static"
-
-const SITE_URL = "https://www.jopgood.com"
 
 /**
  * Generated as static /sitemap.xml at build time. Includes the root page
