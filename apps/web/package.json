@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "check-types": "tsc --noEmit",
     "cf:deploy": "wrangler deploy",
-    "cf:preview": "wrangler versions upload"
+    "cf:preview": "wrangler versions upload",
+    "icons:generate": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -44,6 +45,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rehype-pretty-code": "^0.14.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "velite": "^0.3.1",

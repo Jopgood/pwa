@@ -23,3 +23,10 @@
 /api/search
   Cache-Control: public, max-age=3600, must-revalidate
   Content-Type: application/json
+
+# OpenGraph image: Next emits it as /opengraph-image (no .png extension)
+# so Cloudflare can't infer Content-Type from the filename. Set it
+# explicitly so Slack/Twitter/Facebook/LinkedIn previews recognise it.
+/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400, must-revalidate
