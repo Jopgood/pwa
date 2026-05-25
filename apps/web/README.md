@@ -1,5 +1,7 @@
 # apps/web — Jopgood PWA docs
 
+**Live at [www.jopgood.com](https://www.jopgood.com).**
+
 Next.js 16 (App Router) + fumadocs-mdx, statically exported via `output: "export"`. Deployed to Cloudflare via Workers Static Assets, wired through [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/) so every push to `main` ships and every PR gets a preview URL.
 
 ## Local development
@@ -95,7 +97,9 @@ Workers Static Assets reads `_headers` from the build output root; Next copies `
 
 ## Custom domain
 
-Cloudflare dashboard → Worker → **Domains & Routes** → Add custom domain. If the domain's DNS is managed in the same Cloudflare account, records get created automatically.
+Currently `www.jopgood.com`, wired in the Cloudflare dashboard → Worker → **Domains & Routes**. DNS is managed in the same Cloudflare account so records were created automatically.
+
+The duplicate `.workers.dev` URL is disabled via `workers_dev: false` in [`wrangler.jsonc`](./wrangler.jsonc) — keeps Google from indexing the same content at two hostnames.
 
 ## Search index
 
