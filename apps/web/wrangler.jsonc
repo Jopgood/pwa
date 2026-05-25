@@ -12,10 +12,23 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jopgood-pwa-docs",
+  // Matches the Worker name in the Cloudflare dashboard (default from the
+  // repo name when the Worker was first imported). Mismatching this and the
+  // dashboard name triggers Cloudflare's "open a PR to fix" auto-bot.
+  "name": "pwa",
   "compatibility_date": "2026-05-24",
   "assets": {
     "directory": "./out",
     "not_found_handling": "404-page"
-  }
+  },
+  // Production URL: https://www.jopgood.com (custom domain wired in the
+  // Cloudflare dashboard, Domains & Routes).
+  //
+  // workers_dev: false — retire the duplicate https://pwa.jehopgood.workers.dev
+  //   URL now that the custom domain is canonical. Avoids SEO confusion from
+  //   the same content being indexable at two hostnames.
+  // preview_urls: true — keep per-deployment preview URLs enabled so PRs and
+  //   non-production-branch deploys get their own throwaway URL.
+  "workers_dev": false,
+  "preview_urls": true
 }
