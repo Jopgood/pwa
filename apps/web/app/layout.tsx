@@ -70,14 +70,26 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     locale: "en_GB",
-    // Default OG image is generated at build time by app/opengraph-image.tsx.
-    // Next picks it up automatically; no explicit images entry needed here.
+    // Static PNG in public/ — the previous dynamic /opengraph-image route
+    // served at an extension-less URL, which some link-preview validators
+    // (Facebook, LinkedIn) reject for being un-sniffable. Explicit .png
+    // sidesteps the whole class of problem.
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Jopgood PWA — Headless push-notification primitives for the web.",
+        type: "image/png",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: ["/og.png"],
   },
 
   robots: {
