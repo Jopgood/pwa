@@ -1,0 +1,21 @@
+/**
+ * Cloudflare Workers config for the docs site.
+ *
+ * The site has no Worker code — it's a Next.js static export served by
+ * Workers' Static Assets feature. The `assets.directory` points at the
+ * Next build output; Workers handles the rest (extension stripping,
+ * 404 fallback to ./out/404.html).
+ *
+ * Schema reference:
+ *   https://developers.cloudflare.com/workers/static-assets/
+ *   https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jopgood-pwa-docs",
+  "compatibility_date": "2026-05-24",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
