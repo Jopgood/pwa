@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { RootProvider } from "fumadocs-ui/provider/next"
 import SearchDialog from "@/components/search-dialog"
+import { SITE_URL } from "@/lib/site-url"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 })
 
-const SITE_URL = "https://www.jopgood.com"
 const SITE_NAME = "Jopgood PWA"
 const SITE_DESCRIPTION =
   "Headless, type-safe primitives for managing push notification subscriptions, service-worker lifecycle, and browser permissions."
