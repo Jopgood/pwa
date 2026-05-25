@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44" fill="none">
+  <!-- offset shadow (4 px right + down, matching box-shadow: 4px 4px 0 #2a1810) -->
+  <rect x="4" y="4" width="38" height="38" rx="10" fill="#2a1810"/>
+  <!-- terracotta fill -->
+  <rect x="0" y="0" width="38" height="38" rx="10" fill="#c84b31"/>
+  <!-- 2 px border — inner-stroked so it sits flush with the fill edge -->
+  <rect x="1" y="1" width="36" height="36" rx="9" stroke="#2a1810" stroke-width="2"/>
+  <!-- J glyph, vertically centred in the 38 px box -->
+  <text
+    x="19" y="27"
+    font-family="'Arial Black', 'Inter', system-ui, sans-serif"
+    font-weight="900"
+    font-size="22"
+    fill="#fffcf2"
+    text-anchor="middle"
+  >J</text>
+</svg>
