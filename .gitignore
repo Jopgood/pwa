@@ -7,9 +7,15 @@ dist
 out
 *.tsbuildinfo
 # Personal Claude state (settings.local.json etc.), but keep shared
-# project skills checked in so future sessions and teammates pick them up.
+# project skills and agents checked in so future sessions and teammates pick them up.
 .claude/*
 !.claude/skills
+!.claude/agents
+
+# Local-only working docs for in-flight work (spec drafts, running
+# implementation notes). Stay out of git, surface in PR descriptions instead.
+/SPEC-*.md
+/IMPLEMENTATION-NOTES.md
 # Repo-root /docs only (SPEC dump); does NOT match apps/web/content/docs.
 /docs
 coverage
