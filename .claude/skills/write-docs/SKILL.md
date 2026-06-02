@@ -37,11 +37,12 @@ apps/web/content/docs/
 Rules:
 
 - **Sidebar order is `meta.json`, not filename.** The `pages` array sets order; omit a file and it disappears from the sidebar (but stays routable).
-- **Folders become sidebar groups**, labelled by their `meta.json` `title`. Top-level pages render in the "Getting Started" group — see [sidebar.tsx](apps/web/app/(docs)/docs/_components/sidebar.tsx).
-- **Section landing pages are `index.mdx`** with title `Overview`. They explain *what this section is* and end with `<LinkedCard>`s to the meaningful next pages.
+- **Folders become sidebar groups**, labelled by their `meta.json` `title`. Top-level pages render in the "Getting Started" group — see [sidebar.tsx](<apps/web/app/(docs)/docs/_components/sidebar.tsx>).
+- **Section landing pages are `index.mdx`** with title `Overview`. They explain _what this section is_ and end with `<LinkedCard>`s to the meaningful next pages.
 - **Keep filenames kebab-case** (`quick-start.mdx`, not `quickStart.mdx`).
 
 When adding a new section folder, you must:
+
 1. Create `<section>/meta.json` with `title`, optional `description`, and `pages` array.
 2. Add the folder name to the top-level `apps/web/content/docs/meta.json` `pages` array (otherwise it won't appear).
 3. Create at minimum an `index.mdx` for the section.
@@ -65,12 +66,10 @@ description: One sentence that completes "This page is about…". Used in <head>
 Every page opens with a `<Lead>` paragraph that frames the page in one sentence:
 
 ```mdx
-<Lead>
-The shortest path to a working PWA. No framework, no adapter.
-</Lead>
+<Lead>The shortest path to a working PWA. No framework, no adapter.</Lead>
 ```
 
-Then the body. Use `##` for top-level sections (becomes the table-of-contents entry — see [DocsTOC](apps/web/app/(docs)/docs/_components/toc.tsx)). Use `###` inside `<Step>` blocks. Avoid `#` — the route renders the H1.
+Then the body. Use `##` for top-level sections (becomes the table-of-contents entry — see [DocsTOC](<apps/web/app/(docs)/docs/_components/toc.tsx>)). Use `###` inside `<Step>` blocks. Avoid `#` — the route renders the H1.
 
 End-of-page navigation — two systems coexist:
 
@@ -80,7 +79,7 @@ End-of-page navigation — two systems coexist:
 Rules:
 
 - **Leaf pages**: no `<LinkedCard>` exits. The neighbour bar is sufficient and adding cards just duplicates it.
-- **Section overviews (`index.mdx`)**: use `<LinkedCard>` exits **only for destinations the neighbour bar wouldn't reach naturally**, or where the description meaningfully helps the reader choose between branches. Example: [core/index.mdx](apps/web/content/docs/core/index.mdx) ending with cards for both Quick Start *and* API Reference — the neighbour bar can only point to the next sequential page (Quick Start), so the API Reference card adds value. But a single `<LinkedCard>` to Quick Start would be redundant — drop it and let the bar do that job.
+- **Section overviews (`index.mdx`)**: use `<LinkedCard>` exits **only for destinations the neighbour bar wouldn't reach naturally**, or where the description meaningfully helps the reader choose between branches. Example: [core/index.mdx](apps/web/content/docs/core/index.mdx) ending with cards for both Quick Start _and_ API Reference — the neighbour bar can only point to the next sequential page (Quick Start), so the API Reference card adds value. But a single `<LinkedCard>` to Quick Start would be redundant — drop it and let the bar do that job.
 - If you have only one logical "next" and it matches the neighbour bar's target, **delete the LinkedCard**.
 
 ## MDX component cheat sheet
@@ -88,18 +87,21 @@ Rules:
 All of these are auto-registered in [apps/web/components/mdx.tsx](apps/web/components/mdx.tsx) — import nothing, just use them.
 
 ### `<Lead>`
+
 The opening sentence/paragraph. Exactly one per page, immediately under the frontmatter.
 
 ### `<Callout variant="…" title="…">`
+
 Variants: `info` (default), `note`, `tip`, `warning`, `danger`, `success`.
 
 ```mdx
 <Callout variant="warning" title="Pre-release">
-The API will change before 1.0. Pin exact versions.
+  The API will change before 1.0. Pin exact versions.
 </Callout>
 ```
 
-Use sparingly — a page packed with callouts loses signal. Pick the variant by *intent*:
+Use sparingly — a page packed with callouts loses signal. Pick the variant by _intent_:
+
 - `warning` — stable behavior that has caveats (e.g. unstable API, peer dep needed)
 - `danger` — "don't do this" / will break in production
 - `tip` — a non-obvious shortcut
@@ -107,26 +109,20 @@ Use sparingly — a page packed with callouts loses signal. Pick the variant by 
 - `success` — confirmations (rare in reference docs)
 
 ### `<Steps>` / `<Step>`
+
 For ordered procedures (install → configure → verify). The wrapper auto-numbers; each `<Step>` should start with an `### H3` heading naming the step.
 
-```mdx
+````mdx
 <Steps>
-  <Step>
-    ### Install the package
-    ```bash
-    npm install @jopgood/pwa-core
-    ```
-  </Step>
-  <Step>
-    ### Register at boot
-    …
-  </Step>
+  <Step>### Install the package ```bash npm install @jopgood/pwa-core ```</Step>
+  <Step>### Register at boot …</Step>
 </Steps>
-```
+````
 
 Use for quick-start guides. Don't use for reference material — a `##` heading per item is clearer there.
 
 ### `<LinkedCard href eyebrow title>`
+
 End-of-page or section-landing navigation card. `eyebrow` is a short category label (`Tutorial`, `Reference`, `Setup`).
 
 ```mdx
@@ -136,12 +132,13 @@ End-of-page or section-landing navigation card. `eyebrow` is a short category la
 ```
 
 ### Tables
+
 Used heavily for API reference. Standard Markdown — the custom renderer wraps them in a bordered container.
 
 ```mdx
-| Option | Type | Default | Description |
-| ------ | ---- | ------- | ----------- |
-| `swPath` | `string` | — | Path to your service worker file. **Required.** |
+| Option   | Type     | Default | Description                                     |
+| -------- | -------- | ------- | ----------------------------------------------- |
+| `swPath` | `string` | —       | Path to your service worker file. **Required.** |
 ```
 
 Use `—` for "no default". Backtick types and option names. Bold `**Required.**` inline rather than adding a Required column.
@@ -152,7 +149,7 @@ Use `—` for "no default". Backtick types and option names. Bold `**Required.**
   - Exact identifiers from the package surface (`registerPWA`, `swPath`, `PWAController`)
   - File paths (`public/sw.js`) and shell commands you'd type literally
   - Type names and literal values (`"accepted"`, `boolean`)
-  Do **not** wrap: ordinary nouns ("service worker", "React", "the browser"), product/package names in running prose ("React adapter", not `` `React adapter` ``), feature names, or vague concepts. If you're tempted to chip a phrase for emphasis, use **bold** instead. As a rule of thumb, more than ~3 chips in a single paragraph means you're decorating, not signposting.
+    Do **not** wrap: ordinary nouns ("service worker", "React", "the browser"), product/package names in running prose ("React adapter", not `` `React adapter` ``), feature names, or vague concepts. If you're tempted to chip a phrase for emphasis, use **bold** instead. As a rule of thumb, more than ~3 chips in a single paragraph means you're decorating, not signposting.
 - **Fenced blocks** with a language hint (`ts`, `tsx`, `js`, `bash`, `html`) get syntax highlighting (theme: `vesper`).
 - **Package-manager blocks**: a single `bash` block starting with `npm install …` is automatically rendered as tabbed npm/yarn/pnpm/bun by the codeblock processor. Just write the npm form — don't duplicate.
 
@@ -163,6 +160,7 @@ npm install @jopgood/pwa-core
 - **Don't add `// filename.ts` comments** to mark filenames; mention them in prose above the block instead.
 
 ### Other registered components
+
 `<Button>`, `<Kbd>`, `<Link>` are available if needed but rarely used in docs.
 
 ## Voice & content rules
@@ -199,7 +197,7 @@ When the docs say "you'll need to handle X yourself," link out to where the read
 
 ### Punctuation
 
-- Em-dashes (`—`) are fine in tables and reference material. In prose, prefer spaced hyphens (` - `) to match the conversational tone of the rest of the writing.
+- Em-dashes (`—`) are fine in tables and reference material. In prose, prefer spaced hyphens (`-`) to match the conversational tone of the rest of the writing.
 - Avoid exclamation marks.
 - Use bold sparingly — only for words a skimmer needs to register (Required, Don't, defaults).
 
@@ -225,21 +223,21 @@ For each `.mdx` file:
 
 1. Frontmatter present with `title` + `description`? Description under ~140 chars and not a restatement of the title?
 2. No leading `# H1` in the body (route owns it)?
-3. Exactly one `<Lead>` immediately after frontmatter? Is it a *frame for the page* (one sentence, what you'll learn / what this is), not a summary of the package?
+3. Exactly one `<Lead>` immediately after frontmatter? Is it a _frame for the page_ (one sentence, what you'll learn / what this is), not a summary of the package?
 4. Heading levels: only `##` and `###`, no skipped levels?
 5. Listed in its folder's `meta.json` `pages` array? Filename kebab-case?
 6. If it's a section landing (`index.mdx`): ends with `<LinkedCard>`s pointing to the meaningful next pages?
 7. If it's a leaf: no manual "next page" links (the prev/next bar handles it)?
-8. **Navigation duplication check.** Look up the page's next neighbour from `meta.json`. If a `<LinkedCard>` exit on this page points to the same URL as that next neighbour, it duplicates the auto-generated `<PageNeighbours>` bar — flag for removal unless the card description adds information the bar can't (e.g. on overviews with branching paths). A page should rarely have *both* a single LinkedCard "Next →" *and* the neighbour bar pointing to the same place.
+8. **Navigation duplication check.** Look up the page's next neighbour from `meta.json`. If a `<LinkedCard>` exit on this page points to the same URL as that next neighbour, it duplicates the auto-generated `<PageNeighbours>` bar — flag for removal unless the card description adds information the bar can't (e.g. on overviews with branching paths). A page should rarely have _both_ a single LinkedCard "Next →" _and_ the neighbour bar pointing to the same place.
 
 ### Pass 2 — component & visual density
 
-The brutalist theme is loud on purpose — that means each loud element has to *earn* its place. Flag any of these:
+The brutalist theme is loud on purpose — that means each loud element has to _earn_ its place. Flag any of these:
 
 - **Inline-code overuse** (the big one you're hitting). Count `` ` `` chips per paragraph; >3 is almost always wrong. Remove chips from: framework/product names in prose, vague concepts, English nouns that just happen to map to a concept ("the browser", "the bundle"). Keep them only on literal identifiers, paths, types, and shell tokens.
 - **Callout stacking.** Two `<Callout>`s in a row, or more than ~2 per page, dilutes their signal. Merge, demote to inline prose, or pick the most important one to keep.
 - **Wrong callout variant.** `warning` for stable behavior, `danger` for casual tips, `tip` for things that aren't actually shortcuts — re-pick using the variant intent guide above.
-- **Steps misuse.** `<Steps>` is for *ordered procedures the reader executes in sequence*. If the items are independent (e.g. "three hooks you can use"), they should be `##`/`###` sections, not steps.
+- **Steps misuse.** `<Steps>` is for _ordered procedures the reader executes in sequence_. If the items are independent (e.g. "three hooks you can use"), they should be `##`/`###` sections, not steps.
 - **LinkedCards on leaf pages.** Section-landing only — strip them from leaves; the `<PageNeighbours>` bar already handles "what's next".
 - **Single-card "Next" duplicating the neighbour bar.** A `<LinkedCard>` whose only job is "go to the next page" is redundant with the auto-generated pagination — collapse into the bar. Multi-card branching exits are fine (the bar can only show one neighbour).
 - **Tables for two rows.** A 2-row table with one column of values is usually clearer as a definition list or prose.
@@ -250,7 +248,7 @@ The brutalist theme is loud on purpose — that means each loud element has to *
 - **Voice consistency:** instructional (not salespersonal), flat statements for unopinionated material, lowercase headings, spaced hyphens in prose. Flag any "you own X" / "you bring X" / boast-bullet lists ("Tiny.", "Fast.", "Typed.") as voice violations to rewrite per the rules above.
 - **Hand-off completeness:** every "you'll have to do X yourself" should link out to where the reader can learn X (MDN for web APIs, framework docs, our own deeper page).
 - **Truthfulness:** every code sample, option name, type, and behavior claim must match the actual source in [packages/](packages). Open the relevant `packages/*/src` file and verify — don't trust the existing doc.
-- **Scope clarity:** does the page say *what it doesn't do*? The convention is explicit non-scope ("It does **not** do…", "What you don't get") — pages without it often confuse readers.
+- **Scope clarity:** does the page say _what it doesn't do_? The convention is explicit non-scope ("It does **not** do…", "What you don't get") — pages without it often confuse readers.
 - **Lead-with-the-verb** in procedural prose.
 - **Cross-links:** does the page link to the next logical doc(s)? Are existing links pointing to pages that still exist?
 
@@ -273,13 +271,13 @@ Then wait for approval before editing — or batch the obvious mechanical fixes 
 
 ## Quick reference: where things live
 
-| Concern | File |
-| --- | --- |
-| Content | [apps/web/content/docs/](apps/web/content/docs) |
-| Sidebar order | each folder's `meta.json` |
-| Sidebar rendering | [apps/web/app/(docs)/docs/_components/sidebar.tsx](apps/web/app/(docs)/docs/_components/sidebar.tsx) |
-| MDX components & element styling | [apps/web/components/mdx.tsx](apps/web/components/mdx.tsx) |
-| Page route (H1, header, neighbours, TOC) | [apps/web/app/(docs)/docs/[[...slug]]/page.tsx](apps/web/app/(docs)/docs/[[...slug]]/page.tsx) |
-| Docs layout (header + sidebar shell) | [apps/web/app/(docs)/docs/layout.tsx](apps/web/app/(docs)/docs/layout.tsx) |
-| fumadocs source loader | [apps/web/lib/source.ts](apps/web/lib/source.ts) |
-| Code-highlighting theme | [apps/web/source.config.ts](apps/web/source.config.ts) (`vesper`) |
+| Concern                                  | File                                                                                                    |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Content                                  | [apps/web/content/docs/](apps/web/content/docs)                                                         |
+| Sidebar order                            | each folder's `meta.json`                                                                               |
+| Sidebar rendering                        | [apps/web/app/(docs)/docs/\_components/sidebar.tsx](<apps/web/app/(docs)/docs/_components/sidebar.tsx>) |
+| MDX components & element styling         | [apps/web/components/mdx.tsx](apps/web/components/mdx.tsx)                                              |
+| Page route (H1, header, neighbours, TOC) | [apps/web/app/(docs)/docs/[[...slug]]/page.tsx](<apps/web/app/(docs)/docs/[[...slug]]/page.tsx>)        |
+| Docs layout (header + sidebar shell)     | [apps/web/app/(docs)/docs/layout.tsx](<apps/web/app/(docs)/docs/layout.tsx>)                            |
+| fumadocs source loader                   | [apps/web/lib/source.ts](apps/web/lib/source.ts)                                                        |
+| Code-highlighting theme                  | [apps/web/source.config.ts](apps/web/source.config.ts) (`vesper`)                                       |

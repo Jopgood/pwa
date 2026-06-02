@@ -15,6 +15,7 @@ Package manager is pnpm (>=10.18), Node >=20. All commands run from the repo roo
 - `pnpm --filter vanilla dev` / `pnpm --filter nextjs dev` — run an example (build the packages first)
 
 Releases use Changesets, not manual version bumps:
+
 - `pnpm changeset` to declare a bump in a PR (commit the generated `.changeset/*.md`)
 - Merging the auto-opened "Version Packages" PR triggers `pnpm changeset:publish` → npm
 - Never hand-edit `version` in `packages/*/package.json`; examples are in the changeset `ignore` list

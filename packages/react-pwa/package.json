@@ -1,6 +1,6 @@
 {
   "name": "@jopgood/react-pwa",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React adapter for @jopgood/pwa-core",
   "author": "Jopgood",
   "license": "MIT",

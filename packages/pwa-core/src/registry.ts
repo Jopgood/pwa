@@ -48,10 +48,7 @@ export class SWRegistrar {
     }));
 
     try {
-      const registration = await navigator.serviceWorker.register(
-        url,
-        options,
-      );
+      const registration = await navigator.serviceWorker.register(url, options);
       // If destroy() ran while register() was in flight (StrictMode
       // cleanup), bail without attaching anything — the signal is
       // already aborted, so further addEventListener calls would be
@@ -101,10 +98,7 @@ export class SWRegistrar {
           swState: "installing",
           error: null,
         }));
-      } else if (
-        registration.waiting &&
-        navigator.serviceWorker.controller
-      ) {
+      } else if (registration.waiting && navigator.serviceWorker.controller) {
         this.store.setState((state) => ({
           ...state,
           swState: "waiting",

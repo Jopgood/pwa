@@ -41,6 +41,7 @@ The litmus test: if removing the comment would let a confident developer make a 
 ## How to report
 
 Group findings by severity (High / Medium / Low), with file:line refs:
+
 - **High**: outdated comments that mislead, JSDoc that contradicts behavior, ticket archaeology in published packages' source (it'll ship to npm).
 - **Medium**: restatements, redundant JSDoc, inconsistent documentation across siblings.
 - **Low**: stale TODOs, journal entries that aren't actively harmful.

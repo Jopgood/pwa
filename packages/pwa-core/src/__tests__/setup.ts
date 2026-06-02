@@ -77,7 +77,11 @@ function makeListenerCapture(): {
   >();
   return {
     addEventListener: vi.fn(
-      (type: string, listener: EventListener, options?: AddEventListenerOptions) => {
+      (
+        type: string,
+        listener: EventListener,
+        options?: AddEventListenerOptions,
+      ) => {
         const arr = captured.get(type) ?? [];
         arr.push({ listener, signal: options?.signal });
         captured.set(type, arr);
