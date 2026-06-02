@@ -478,7 +478,7 @@ const brutalistComponents: MDXComponents = {
       return (
         <code
           className={cn(
-            "rounded-sm border-2 border-border bg-accent px-1.5 py-0.5 font-mono text-[0.85em] font-semibold text-foreground box-decoration-clone",
+            "rounded-sm border-2 border-border bg-accent box-decoration-clone px-1.5 py-0.5 font-mono text-[0.85em] font-semibold text-foreground",
             className
           )}
           {...props}

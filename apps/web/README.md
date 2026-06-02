@@ -38,8 +38,8 @@ Deployed as a **Worker with Static Assets**, not a Pages project. Config lives i
   "compatibility_date": "2026-05-24",
   "assets": {
     "directory": "./out",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+  },
 }
 ```
 
@@ -49,12 +49,12 @@ No `main` entry — there's no Worker code, just assets. `not_found_handling: "4
 
 In the dashboard (Workers & Pages → **Create** → **Import a repository** → `Jopgood/pwa`):
 
-| Setting | Value |
-| --- | --- |
-| Root directory | _(leave blank — commands run from repo root)_ |
-| Build command | `pnpm install && pnpm build:core && pnpm build:react && pnpm --filter web build` |
-| **Production** deploy command | `pnpm --filter web cf:deploy` |
-| **Non-production branch** deploy command | `pnpm --filter web cf:preview` |
+| Setting                                  | Value                                                                            |
+| ---------------------------------------- | -------------------------------------------------------------------------------- |
+| Root directory                           | _(leave blank — commands run from repo root)_                                    |
+| Build command                            | `pnpm install && pnpm build:core && pnpm build:react && pnpm --filter web build` |
+| **Production** deploy command            | `pnpm --filter web cf:deploy`                                                    |
+| **Non-production branch** deploy command | `pnpm --filter web cf:preview`                                                   |
 
 The `cf:deploy` / `cf:preview` scripts in this package's `package.json` run `wrangler deploy` / `wrangler versions upload` respectively. Running them via `pnpm --filter web` executes them in `apps/web/`'s cwd, so wrangler finds `wrangler.jsonc` and the locally-installed `wrangler` binary (no `npx` download cost on every deploy).
 
@@ -64,10 +64,10 @@ _(Cloudflare's monorepo guide suggests setting Root directory to the app folder 
 
 ### Environment variables
 
-| Name | Value | Why |
-| --- | --- | --- |
-| `NODE_VERSION` | `22` | Repo requires `>=20`; [`.nvmrc`](./.nvmrc) also pins 22 for local consistency. |
-| `PNPM_VERSION` | `10.18.0` | Matches `packageManager` in the root `package.json`. |
+| Name                                     | Value                     | Why                                                                                                                                      |
+| ---------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_VERSION`                           | `22`                      | Repo requires `>=20`; [`.nvmrc`](./.nvmrc) also pins 22 for local consistency.                                                           |
+| `PNPM_VERSION`                           | `10.18.0`                 | Matches `packageManager` in the root `package.json`.                                                                                     |
 | `NEXT_PUBLIC_SITE_URL` (production only) | `https://www.jopgood.com` | Canonical site URL, baked into the build for OG / sitemap / robots. See [`lib/site-url.ts`](./lib/site-url.ts) for the resolution order. |
 
 **Per-deploy URLs on previews.** Leave `NEXT_PUBLIC_SITE_URL` unset on non-production deploys — [`lib/site-url.ts`](./lib/site-url.ts) falls back to Cloudflare's auto-provided `CF_PAGES_URL` so preview builds emit OG / sitemap / robots URLs that point at the preview origin (not production). This is what makes link-preview validators work against PR-preview URLs.

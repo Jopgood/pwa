@@ -117,11 +117,7 @@ describe("SubscriptionManager.unsubscribe — uses stored subscription", () => {
     }));
 
     const onChange = vi.fn();
-    const manager = new SubscriptionManager(
-      store,
-      FAKE_VAPID,
-      onChange,
-    );
+    const manager = new SubscriptionManager(store, FAKE_VAPID, onChange);
 
     await manager.unsubscribe();
 
@@ -164,11 +160,7 @@ describe("SubscriptionManager.unsubscribe — uses stored subscription", () => {
     }));
 
     const onChange = vi.fn();
-    const manager = new SubscriptionManager(
-      store,
-      FAKE_VAPID,
-      onChange,
-    );
+    const manager = new SubscriptionManager(store, FAKE_VAPID, onChange);
 
     await manager.unsubscribe();
 
@@ -225,11 +217,7 @@ describe("SubscriptionManager.unsubscribe — uses stored subscription", () => {
 
     const store = createPWAStore();
     const onChange = vi.fn();
-    const manager = new SubscriptionManager(
-      store,
-      FAKE_VAPID,
-      onChange,
-    );
+    const manager = new SubscriptionManager(store, FAKE_VAPID, onChange);
 
     const result = await manager.unsubscribe();
 
@@ -249,11 +237,7 @@ describe("SubscriptionManager.unsubscribe — uses stored subscription", () => {
     const store = createPWAStore();
     // store.subscription stays null — sync() never ran
     const onChange = vi.fn();
-    const manager = new SubscriptionManager(
-      store,
-      FAKE_VAPID,
-      onChange,
-    );
+    const manager = new SubscriptionManager(store, FAKE_VAPID, onChange);
 
     await manager.unsubscribe();
 

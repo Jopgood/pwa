@@ -1,5 +1,12 @@
 # @jopgood/react-pwa
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`e218db2`](https://github.com/Jopgood/pwa/commit/e218db22b9ccfe1943e198ccb21d721c14d20420)]:
+  - @jopgood/pwa-core@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
