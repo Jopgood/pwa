@@ -21,11 +21,31 @@ export class SubscriptionManager {
       ...prev,
       subscription,
       isSubscribed: !!subscription,
+      error: null,
     }));
   }
 
-  async subscribe() {
-    if (!("serviceWorker" in navigator)) return;
+  async subscribe(): Promise<PushSubscription | null> {
+    if (!("serviceWorker" in navigator)) return null;
+
+    // Permission gate — without this, Chrome implicitly prompts on
+    // subscribe() while Firefox/Safari throw NotAllowedError, so callers
+    // see browser-dependent behavior from the same code path. We refuse
+    // unless permission is explicitly granted; callers drive the prompt
+    // separately via requestNotificationPermission(). The "default" case
+    // is treated the same as "denied" on purpose — we never want a
+    // surprise prompt fired from subscribe().
+    const permission =
+      typeof Notification !== "undefined" ? Notification.permission : "denied";
+    if (permission !== "granted") {
+      const err = new Error(
+        "Notification permission not granted — call requestNotificationPermission() first",
+      );
+      this.store.setState((prev) => ({ ...prev, error: err }));
+      this.onError?.(err);
+      return null;
+    }
+
     const registration = await navigator.serviceWorker.ready;
 
     try {
@@ -39,7 +59,9 @@ export class SubscriptionManager {
         ...prev,
         subscription,
         isSubscribed: true,
+        error: null,
       }));
+      return subscription;
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       this.store.setState((prev) => ({
@@ -47,24 +69,47 @@ export class SubscriptionManager {
         error: err,
       }));
       this.onError?.(err);
+      return null;
     }
   }
 
-  async unsubscribe() {
-    if (!("serviceWorker" in navigator)) return;
-    const registration = await navigator.serviceWorker.ready;
+  async unsubscribe(): Promise<boolean> {
+    if (!("serviceWorker" in navigator)) return false;
 
-    const subscription = await registration.pushManager.getSubscription();
-
-    if (subscription) {
-      await subscription.unsubscribe();
-      this.onSubscriptionChange?.(null);
-      this.store.setState((prev) => ({
-        ...prev,
-        subscription: null,
-        isSubscribed: false,
-      }));
+    // Use the stored subscription — it's the only reference we can act
+    // on when the browser-side subscription has been invalidated
+    // out-of-band (different tab, server-pushed 410 Gone, expired). In
+    // those cases pushManager.getSubscription() returns null, so calling
+    // it first would silently no-op and leave the store wedged at
+    // isSubscribed: true forever. The pushManager fallback below only
+    // exists for the unsubscribe-before-sync path.
+    let subscription: PushSubscription | null = this.store.state.subscription;
+    if (!subscription) {
+      const registration = await navigator.serviceWorker.ready;
+      subscription = await registration.pushManager.getSubscription();
     }
+    if (!subscription) return false;
+
+    try {
+      await subscription.unsubscribe();
+    } catch (error) {
+      // The browser-side subscription may already be gone (server-pushed
+      // 410, expired). The user's intent — "be in an unsubscribed state"
+      // — is still satisfied, so we don't poison store.error and the
+      // success path below still runs. But the consumer deserves to know
+      // a low-level call failed, so we surface via onError.
+      const err = error instanceof Error ? error : new Error(String(error));
+      this.onError?.(err);
+    }
+
+    this.onSubscriptionChange?.(null);
+    this.store.setState((prev) => ({
+      ...prev,
+      subscription: null,
+      isSubscribed: false,
+      error: null,
+    }));
+    return true;
   }
 
   private urlBase64ToUint8Array(base64: string): Uint8Array<ArrayBuffer> {
