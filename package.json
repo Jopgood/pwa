@@ -10,7 +10,9 @@
     "dev": "tsdown --watch",
     "dev:web": "pnpm dev --filter apps/web",
     "clean": "pnpm -r exec rm -rf dist",
-    "test:types": "pnpm -r test:types",
+    "test": "turbo run test",
+    "test:watch": "vitest",
+    "test:types": "turbo run test:types",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "changeset": "changeset",
     "changeset:version": "changeset version && pnpm install --no-frozen-lockfile && pnpm format",
@@ -20,11 +22,13 @@
     "@changesets/cli": "^2.31.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "catalog:dev",
+    "happy-dom": "catalog:dev",
     "prettier": "catalog:dev",
     "publint": "^0.3.18",
     "tsdown": "catalog:dev",
     "turbo": "^2.9.12",
-    "typescript": "catalog:dev"
+    "typescript": "catalog:dev",
+    "vitest": "catalog:dev"
   },
   "engines": {
     "node": ">=20"
