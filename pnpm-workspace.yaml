@@ -6,9 +6,11 @@ packages:
 catalogs:
   dev:
     "@types/node": ^22.10.2
+    happy-dom: ^20.0.0
     prettier: ^3.4.2
     tsdown: ^0.21.8
     typescript: ^5.7.2
+    vitest: ^4.0.0
   peer:
     "@types/react": ^19.0.0
     "@types/react-dom": ^19.0.0

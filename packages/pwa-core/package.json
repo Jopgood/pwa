@@ -46,9 +46,15 @@
     "node": ">=20"
   },
   "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "@tanstack/store": "catalog:prod"
+  },
+  "devDependencies": {
+    "happy-dom": "catalog:dev",
+    "vitest": "catalog:dev"
   }
 }
