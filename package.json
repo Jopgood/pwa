@@ -24,6 +24,7 @@
     "@types/node": "catalog:dev",
     "happy-dom": "catalog:dev",
     "prettier": "catalog:dev",
+    "prettier-plugin-tailwindcss": "catalog:dev",
     "publint": "^0.3.18",
     "tsdown": "catalog:dev",
     "turbo": "^2.9.12",
