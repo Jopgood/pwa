@@ -51,7 +51,14 @@ export class SubscriptionManager {
     try {
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(this.vapidPublicKey),
+        // DOM types want a Uint8Array backed by ArrayBuffer specifically
+        // (not the SharedArrayBuffer variant). The helper produces one
+        // via the `new Uint8Array(length)` constructor — narrow at the
+        // boundary rather than thread the generic through the helper's
+        // return type, which would impose TypeScript 5.7+ on consumers.
+        applicationServerKey: this.urlBase64ToUint8Array(
+          this.vapidPublicKey,
+        ) as BufferSource,
       });
 
       this.onSubscriptionChange?.(subscription);
@@ -112,7 +119,7 @@ export class SubscriptionManager {
     return true;
   }
 
-  private urlBase64ToUint8Array(base64: string): Uint8Array<ArrayBuffer> {
+  private urlBase64ToUint8Array(base64: string): Uint8Array {
     const padding = "=".repeat((4 - (base64.length % 4)) % 4);
     const base64Std = (base64 + padding).replace(/-/g, "+").replace(/_/g, "/");
     const rawData = atob(base64Std);
