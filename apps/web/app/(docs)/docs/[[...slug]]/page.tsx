@@ -7,6 +7,7 @@ import { getMDXComponents } from "@/components/mdx"
 import { createRelativeLink } from "fumadocs-ui/mdx"
 import { Metadata } from "next"
 import DocsTOC from "../_components/toc"
+import { SITE_URL } from "@/lib/site-url"
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params
@@ -54,8 +55,24 @@ export async function generateMetadata(
   const page = source.getPage(params.slug)
   if (!page) notFound()
 
+  const url = `${SITE_URL}${page.url}`
+  const title = page.data.title
+  const description = page.data.description
+
   return {
-    title: page.data.title,
-    description: page.data.description,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   }
 }
