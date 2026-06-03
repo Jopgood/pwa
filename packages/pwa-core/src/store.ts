@@ -1,7 +1,7 @@
 import { createStore } from "@tanstack/store";
 
 export interface PWAState {
-  permission: "default" | "granted" | "denied";
+  permission: NotificationPermission;
   /** False until `mount()` runs and confirms the browser exposes the
    *  Service Worker API. Stays false in unsupported envs. */
   isSupported: boolean;
