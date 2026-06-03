@@ -16,9 +16,11 @@ Package manager is pnpm (>=10.18), Node >=20. All commands run from the repo roo
 
 Releases use Changesets, not manual version bumps:
 
-- `pnpm changeset` to declare a bump in a PR (commit the generated `.changeset/*.md`)
-- Merging the auto-opened "Version Packages" PR triggers `pnpm changeset:publish` → npm
-- Never hand-edit `version` in `packages/*/package.json`; examples are in the changeset `ignore` list
+- PRs land on `main` without needing a changeset attached. The model is **release-when-ready, not on every PR** — accumulate changes, then cut a release when the batch is worth shipping.
+- `pnpm changes` lists commits since the last release tag — your "what's accumulated" view when deciding to ship.
+- When ready, run `pnpm changeset` to write one bump summarising the batch (or per-PR if you prefer granularity), commit, push, merge.
+- Merging the auto-opened "Version Packages" PR triggers `pnpm changeset:publish` → npm.
+- Never hand-edit `version` in `packages/*/package.json`; examples are in the changeset `ignore` list.
 
 ## Architecture
 
