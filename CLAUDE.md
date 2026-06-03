@@ -30,7 +30,7 @@ Monorepo with two published packages plus consumers:
   - `SubscriptionManager` (`subscription.ts`) — PushSubscription create/destroy, fires `onSubscriptionChange`
   - `createPWAStore` (`store.ts`) — the single reactive store all three submanagers write to
   - All browser work is deferred to `manager.mount()` so the package is SSR-safe (Next.js).
-- `packages/react-pwa` — React adapter. `PushProvider` puts a `PWAManager` in context; hooks (`usePushNotifications`, `usePermission`, `useSWUpdate`) subscribe to its store via `@tanstack/react-store`. Depends on `@jopgood/pwa-core` as `workspace:*`.
+- `packages/react-pwa` — React adapter. `PushProvider` puts a `PWAManager` in context; hooks (`usePushNotifications`, `usePermission`, `useSWUpdate`) subscribe to its store via `@tanstack/react-store`. Depends on `@jopgood/pwa-core` as `workspace:*` and re-exports its public surface (`export * from "@jopgood/pwa-core"`) so consumers installing the adapter get the core's types and classes without a second `import`. The two packages ship in lockstep — same model as `@tanstack/react-query` over `@tanstack/query-core`.
 
 Key constraint: the core never imports React. The store is the integration seam — adapters subscribe to it; they do not own state.
 
