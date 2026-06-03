@@ -59,6 +59,7 @@ Group findings by severity (High / Medium / Low), with file:line refs:
 - **Low**: cosmetic or stylistic. Optional.
 
 For each finding:
+
 1. One line on the observable problem (what would break, what a user/dev would notice).
 2. One line on the proposed direction (you don't have to write the patch; name the change).
 3. file:line ref.
