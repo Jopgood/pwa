@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./media/jop-pwa-banner.png" alt="Jop PWA" />
+  <img src="./media/jop-pwa-banner.png" alt="Jop PWA Logo" />
 </div>
 
 <br />
