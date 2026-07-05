@@ -4,6 +4,8 @@
 
 <br />
 
+## [DOCS HERE](https://www.jopgood.com/docs)
+
 <div align="center">
   <a href="https://npmjs.com/package/@jopgood/pwa-core">
     <img alt="npm downloads" src="https://img.shields.io/npm/dm/@jopgood/pwa-core.svg" />
